@@ -1,0 +1,94 @@
+https://platform.openai.com/docs/api-reference/introduction
+
+Аутентификация
+API OpenAI использует ключи API для аутентификации. 
+Посетите страницу ключей API, чтобы получить ключ API,
+который вы будете использовать в своих запросах.
+
+Помните, что ваш ключ API является секретным! 
+Не делитесь им с другими и не раскрывайте его в каком-либо 
+клиентском коде (браузерах, приложениях). Производственные 
+запросы должны направляться через ваш собственный внутренний 
+сервер, где ваш ключ API может быть безопасно загружен из переменной 
+среды или службы управления ключами.
+
+Все запросы API должны включать ваш ключ API в Authorizationзаголовок 
+HTTP следующим образом:
+```
+Authorization: Bearer OPENAI_API_KEY
+```
+
+
+Так выглядит запрос к ресурсу ChatGPT:
+curl https://api.openai.com/v1/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $OPENAI_API_KEY" \
+  -d '{
+  "model": "text-davinci-003",
+  "prompt": "текущая температура в москве",
+  "temperature": 1,
+  "max_tokens": 256,
+  "top_p": 1,
+  "frequency_penalty": 0,
+  "presence_penalty": 0
+}'
+
+
+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
+
+Request:
+{
+  "model": "text-davinci-003",
+  "prompt": "напиши классическую структуру 'json' с несколькими полями и оазными типами данных",
+  "temperature": 1,
+  "max_tokens": 256,
+  "top_p": 1,
+  "frequency_penalty": 0,
+  "presence_penalty": 0
+}
+
+Response:
+{
+    "id": "cmpl-7LHoQaJJHUl4aWZT4ZMvAggoCLDNi",
+    "object": "text_completion",
+    "created": 1685307714,
+    "model": "text-davinci-003",
+    "choices": [
+        {
+            "text": "\n\n{\n    \"name\": \"John Smith\",\n    \"age\": 38,\n    \"lives\": true,\n    \"city\": \"New York\",\n    \"zipCode\": \"52525\",\n    \"hobbies\": [\n        \"reading\",\n        \"hiking\"\n    ]\n }",
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 84,
+        "completion_tokens": 69,
+        "total_tokens": 153
+    }
+}
+
+
+Чтобы сохранить ключ API с именем OPENAI_API_KEY в переменных окружения, 
+Вы можете использовать утилиту терминала Export для Linux или Mac или 
+команду setx для Windows.
+
+На Linux/Mac:
+
+export OPENAI_API_KEY=your_openai_api_key
+
+На Windows:
+
+setx OPENAI_API_KEY your_openai_api_key
+setx OPENAI_API_KEY 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
+
+Есть два варианта для получения ключа API с именем OPENAI_API_KEY:
+
+1. Использование Java-класса java.lang.System для получения доступа 
+к переменной окружения.
+
+Пример:
+
+String openApiKey = System.getenv("OPENAI_API_KEY");
+
+2. Использование @Value-аннотации для доступа к пропертям прописанным в конфигурации application.properties
